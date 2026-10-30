@@ -12,36 +12,39 @@
 <div class="container mt-1">
     <div th:if="${uploadSuccess}" class="alert alert-dismissible fade show fileUploadAlert"
          th:classappend="${uploadFailed} ? 'alert-warning' : 'alert-success'" role="alert">
-        <span th:text="${uploadSuccess}">result of the upload</span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <span th:if="${uploadSuccess == 'File uploaded successful'}" th:text="#{webwolf.upload.success}">File uploaded successfully.</span>
+        <span th:if="${uploadSuccess == 'Nothing to upload'}" th:text="#{webwolf.upload.empty}">No file was selected for upload.</span>
+        <span th:if="${uploadSuccess == 'File is too large to upload'}" th:text="#{webwolf.upload.too.large}">The file is too large to upload.</span>
+        <span th:if="${uploadSuccess != 'File uploaded successful' and uploadSuccess != 'Nothing to upload' and uploadSuccess != 'File is too large to upload'}" th:text="${uploadSuccess}">result of the upload</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="aria-label=#{webwolf.upload.close}" aria-label="Close"></button>
     </div>
 
     <div class="alert alert-info alert-dismissible fade show" role="alert">
         <div>
             <p>
-                Upload a file which you need to host as an attacker.
+                <span th:text="#{webwolf.files.instruction}">Upload a file which you need to host as an attacker.</span>
             </p>
             <p>
-                Each file will be available under the following url:
+                <span th:text="#{webwolf.files.url}">Each file will be available under the following url:</span>
                 <span th:text="${webwolf_url}">http://localhost:9090/WebWolf/</span>/files/{username}/{filename}.
             </p>
             <p>
-                You can copy and paste the location from the table below.
+                <span th:text="#{webwolf.files.copy}">You can copy and paste the location from the table below.</span>
             </p>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="aria-label=#{webwolf.upload.close}" aria-label="Close"></button>
     </div>
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title"><strong>Upload a file</strong></h5>
+            <h5 class="card-title"><strong th:text="#{webwolf.files.upload.title}">Upload a file</strong></h5>
             <form th:action="@{/fileupload}" method="post" enctype="multipart/form-data">
                 <fieldset>
                     <div class="mb-3">
                         <input type="file" class="form-control" name="file"/>
                     </div>
                     <div class="mb-3">
-                        <button type="submit" class="btn btn-md btn-primary">Upload files</button>
+                        <button type="submit" class="btn btn-md btn-primary" th:text="#{webwolf.files.upload.button}">Upload files</button>
                     </div>
                 </fieldset>
             </form>
@@ -55,9 +58,9 @@
     <table class="table">
         <thead class="thead-inverse">
         <tr>
-            <th>Filename</th>
-            <th>Size</th>
-            <th>Creation time</th>
+            <th th:text="#{webwolf.files.filename}">Filename</th>
+            <th th:text="#{webwolf.files.size}">Size</th>
+            <th th:text="#{webwolf.files.created}">Creation time</th>
         </tr>
         </thead>
         <tbody>

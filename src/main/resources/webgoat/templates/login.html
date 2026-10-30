@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
     <title th:text="#{login.page.title}">Login Page</title>
     <link rel="shortcut icon" th:href="@{/css/img/favicon.ico}" type="image/x-icon"/>
@@ -44,7 +44,7 @@
             </form>
             <br/><br/>
             <div th:if="${oauth}">
-            <h3 class="form-signin-heading">Login with OAuth 2.0</h3>
+            <h3 class="form-signin-heading" th:text="#{oauth.login}">Login with OAuth 2.0</h3>
                 <table class="table table-striped">
                     <tr><td></tr><a href="oauth2/authorization/github">GitHub</a></td></tr>
                 </table>

@@ -94,11 +94,11 @@ function update(token) {
     $('#header').css('background-color', token.validHeader ? '#FFFFFF' : 'lightcoral');
     $('#payload').css('background-color', token.validPayload ? '#FFFFFF' : 'lightcoral');
     if (token.signatureValid) {
-        $('#signatureValid').html("Signature valid");
+        document.getElementById('signatureValid').textContent = document.getElementById('signatureValid').dataset.valid;
     } else if (!$('#secretKey').val() && !$('#jwks').val()) {
-        $('#signatureValid').html("Signature not validated");
+        document.getElementById('signatureValid').textContent = document.getElementById('signatureValid').dataset.notValidated;
     } else {
-        $('#signatureValid').html("Signature invalid");
+        document.getElementById('signatureValid').textContent = document.getElementById('signatureValid').dataset.invalid;
     }
 }
 

@@ -16,9 +16,9 @@
         <a class="navbar-brand" th:href="@{/home}">WebWolf</a>
 
         <ul class="nav navbar-nav">
-            <li class="nav-item"><a class="nav-link" th:href="@{/home}">Home</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/files}">Files</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/requests}">Incoming requests</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/home}" th:text="#{webwolf.home}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/files}" th:text="#{webwolf.files}">Files</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/requests}" th:text="#{webwolf.requests}">Incoming requests</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/jwt}">JWT</a></li>
         </ul>
         <ul class="navbar-nav position-absolute end-0 mx-3">
@@ -29,7 +29,7 @@
             </li>
             <li class="nav-item"><a class="nav-link" th:href="@{/logout}">
                         <span sec:authorize="isAuthenticated()">
-                        Sign out</span></a>
+                        <span th:text="#{webwolf.signout}">Sign out</span></span></a>
             </li>
         </ul>
 </div>

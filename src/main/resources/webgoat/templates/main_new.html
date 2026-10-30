@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:lang="${#locale.language}">
 <head>
     <meta http-equiv="Expires" CONTENT="-1"/>
     <meta http-equiv="Pragma" CONTENT="no-cache"/>
@@ -54,11 +54,11 @@
                     <li role="presentation"><a role="menuitem" tabindex="-1" th:href="@{/logout}"
                                                th:text="#{logout}">Logout</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#">User: <span sec:authentication="name"></span></a>
+                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#"><span th:text="#{user.label}">User:</span> <span sec:authentication="name"></span></a>
                     </li>
-                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#">Role:
-                        <span sec:authorize="hasAuthority('WEBGOAT_USER')">User</span>
-                        <span sec:authorize="hasAuthority('WEBGOAT_ADMIN')">Admin</span>
+                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#"><span th:text="#{role.label}">Role:</span>
+                        <span sec:authorize="hasAuthority('WEBGOAT_USER')" th:text="#{role.user}">User</span>
+                        <span sec:authorize="hasAuthority('WEBGOAT_ADMIN')" th:text="#{role.admin}">Admin</span>
                     </a>
                     </li>
                     <li role="presentation" class="divider"></li>
@@ -81,6 +81,9 @@
                     <div th:switch="${#locale.language}">
                         <div th:case="'nl'">
                             <img th:src="@{${'/css/img/'}+${#locale.language}+${'lang.svg'}}"></img><span class="caret"></span>
+                        </div>
+                        <div th:case="'zh'">
+                            <img th:src="@{/css/img/cnlang.svg}" alt="简体中文"></img><span class="caret"></span>
                         </div>
                         <div th:case="'de'">
                             <img th:src="@{${'/css/img/'}+${#locale.language}+${'lang.svg'}}"></img><span class="caret"></span>
@@ -123,6 +126,11 @@
                             <img th:src="@{${'/css/img/eslang.svg'}}" alt="Spanish" height="20"></img> Español
                         </a>
                     </li>
+                    <li role="presentation">
+                        <a role="menuitem" th:href="@{/start.mvc?lang=zh#lesson/WebGoatIntroduction.lesson}">
+                            <img th:src="@{/css/img/cnlang.svg}" alt="简体中文" height="20"></img> 简体中文
+                        </a>
+                    </li>
                 </ul>
             </div>
             </div>
@@ -140,7 +148,7 @@
                 <span sec:authorize="hasAuthority('WEBGOAT_ADMIN')">
                     <a href="#adminPanel">
                         <button type="button" id="admin-button" class="btn btn-default right_nav_button"
-                                title="Administration">
+                                th:title="#{administration}" title="Administration">
                             <i class="fa fa-users"></i>
                         </button>
                     </a>
@@ -181,8 +189,7 @@
                             <div id="lesson-content-wrapper" class="panel">
                                 <div class="" id="error-notification-container">
                                     <div class="" id="error-notification">
-                                        <i class="fa fa-exclamation-circle"> There was an unexpected error. Please try
-                                            again.</i>
+                                        <i class="fa fa-exclamation-circle" th:text="#{error.unexpected}">发生意外错误，请重试。</i>
                                     </div>
                                 </div>
                                 <div class="" id="help-controls">

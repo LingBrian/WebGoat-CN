@@ -5,19 +5,14 @@
 <div th:fragment="about" class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 class="modal-title" id="myModalLabel">About WebGoat - Provided by the OWASP Foundation</h3>
+        <h3 class="modal-title" id="myModalLabel" th:text="#{about.title}">About WebGoat - Provided by the OWASP Foundation</h3>
     </div>
     <div class="modal-body modal-scroll">
-        <p>Thanks for hacking The Goat!</p>
+        <p th:text="#{about.thanks}">Thanks for hacking The Goat!</p>
 
-        <p>WebGoat is a demonstration of common web application flaws. The
-            associated exercises are intended to provide hands-on experience with
-            techniques aimed at demonstrating and testing application penetration.
-        </p>
+        <p th:text="#{about.description}">WebGoat is a demonstration of common web application flaws. The associated exercises provide hands-on experience.</p>
 
-        <p>From the entire WebGoat team, we appreciate your interest and efforts
-            in making applications not just better, but safer and more secure for
-            everyone. We, as well as our sacrificial goat, thank you.</p>
+        <p th:text="#{about.gratitude}">The WebGoat team appreciates your interest and efforts to make applications safer.</p>
 
         <p>
             Version: <span th:text="${@environment.getProperty('webgoat.build.version')}"></span>
@@ -25,13 +20,13 @@
 
         <div class="row">
             <div class="col-md-6">
-                <p>Visit our <a href="https://webgoat.org">homepage</a>
+                <p><span th:text="#{about.homepage}">homepage</span>: <a href="https://webgoat.org">webgoat.org</a>
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <p><b>Active Contributors</b>
+                <p><b th:text="#{about.contributors}">Active Contributors</b>
                 <ul>
                     <li>Nanne Baars (Project lead)</li>
                     <li>Ren&eacute; Zubcevic (Developer)</li>
@@ -42,20 +37,17 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <p><b>Corporate Sponsorship</b> - Companies that have donated significant time to WebGoat development
+                <p><b th:text="#{about.sponsorship}">Corporate Sponsorship - Companies that have donated significant time to WebGoat development</b>
                 <ul>
                     <li>Aspect Security</li>
                     <li>Ounce Labs</li>
                 </ul>
                 </p><br/>
 
-                <p>Did we miss you? Our sincere apologies, as we know there have
-                    been many contributors over the years. If your name does not
-                    appear in any of the lists above, please send us a note. We'll
-                    get you added with no further sacrifices required.</p>
+                <p th:text="#{about.missing.contributor}">Did we miss you? Please let us know and we will add your name.</p>
             </div>
             <div class="col-md-6">
-                <p><b>Past Contributors</b>
+                <p><b th:text="#{about.past.contributors}">Past Contributors</b>
                 <ul>
                     <li>Bruce Mayhew (Author / Project lead / Goat herder)</li>
                     <li>Jason White (Architect UX)</li>
@@ -93,7 +85,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{about.close}">Close</button>
     </div>
 </div>
 </body>

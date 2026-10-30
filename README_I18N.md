@@ -1,34 +1,23 @@
-# Multi language support in WebGoat
+# WebGoat 多语言支持
 
-WebGoat is mainly written in English, but it does support multiple languages.
+WebGoat 默认使用英语，并支持多语言界面。课程内容的翻译覆盖情况因语言和课程而异；未提供译文时会回退到英文原文。
 
-## Default language selection
+## 语言选择
 
-1. Current supported languages are: en, fr, de, nl
-2. The primary language is based on the language setting of the browser.
-3. If the language is not in the list of supported language, the language is English
-4. Once logged in, you can switch between the supported languages using a language dropdown menu on the main page
-   1. After switching a language you are back at the Introduction page
+1. 当前界面支持英语（en）、法语（fr）、德语（de）、荷兰语（nl）、西班牙语（es）和简体中文（zh）。
+2. 初次访问时，应用会参考浏览器语言；不支持的语言回退为英语。
+3. 登录后可通过主页面的语言下拉菜单切换语言；切换后会回到课程介绍页。
+4. 简体中文界面仅表示已有中文翻译的通用界面和课程内容，不代表所有课程均已翻译。
 
-## Adding a new language
+## 添加语言或补充翻译
 
-The following steps are required when you want to add a new language
+新增语言时需要：
 
-1. Update [main_new.html](src/main/resources/webgoat/static/main_new.html)
-   1. Add the parts for showing the flag and providing the correct value for the flag= parameter
-      2.
-2. Add a flag image to src/main/resources/webgoat/static/css/img
-   1. See the main_new.html for a link to download flag resources
-3. Add a welcome page to the introduction lesson
-   1. Copy Introduction_.adoc to Introduction_es.adoc (if in this case you want to add Spanish)
-   2. Add a highlighted section that explains that most parts of WebGoat will still be in English and invite people to translate parts where it would be valuable
-4. Translate the main labels
-   1. Copy messages.properties to messages_es.properties (if in this case you want to add Spanish)
-   2. Translate the label values
-5. Optionally translate lessons by
-   1. Adding lang specifc adoc files in documentation folder of the lesson
-   2. Adding WebGoatLabels.properties of a specific language if you want to
-6. Run mvn clean to see if the LabelAndHintIntegration test passes
-7. Run WebGoat and verify that your own language and the other languages work as expected
+1. 在 `src/main/resources/webgoat/templates/main_new.html` 的语言菜单中添加入口，并确保 `lang` 参数使用对应的语言代码。
+2. 在 `src/main/resources/webgoat/static/css/img` 中添加相应的国旗图标。
+3. 为介绍课程添加语言版本，例如 `Introduction_zh.adoc`。建议说明课程中仍有部分内容为英文，并邀请社区协助翻译。
+4. 复制 `src/main/resources/i18n/messages.properties` 为 `messages_<语言代码>.properties`，翻译所有面向用户的值，保留属性键不变。
+5. 可为课程新增对应语言的 `WebGoatLabels_<语言代码>.properties`，并在该课程的 `documentation` 目录中添加 `<原文件名>_<语言代码>.adoc`。
+6. 运行 `./mvnw clean test`，并启动 WebGoat 检查新语言及已有语言是否正常。
 
-If you only want to translate more for a certain language, you only need to do step 4-8
+课程内容翻译需保留练习的安全目标、漏洞利用路径、提示及完成条件，不应改变课程行为。

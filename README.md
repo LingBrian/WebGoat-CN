@@ -1,4 +1,8 @@
-# WebGoat: A deliberately insecure Web Application
+# WebGoat：故意存在安全漏洞的 Web 应用
+
+> **中文翻译版 v2026.10.30**：本仓库基于 [WebGoat 原项目](https://github.com/WebGoat/WebGoat) 翻译和本地化，翻译日期为 **2026-10-30**。本中文版本为社区维护的非官方版本，原项目版权、许可证和安全练习内容归原项目及其贡献者所有。
+>
+> 原项目官网与源码：[OWASP WebGoat](https://github.com/WebGoat/WebGoat)
 
 [![Build](https://github.com/WebGoat/WebGoat/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/WebGoat/WebGoat/actions/workflows/build.yml)
 [![java-jdk](https://img.shields.io/badge/java%20jdk-25-green.svg)](https://jdk.java.net/)
@@ -8,164 +12,151 @@
 [![Discussions](https://img.shields.io/github/discussions/WebGoat/WebGoat)](https://github.com/WebGoat/WebGoat/discussions)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
-# Introduction
+## 简介
 
-WebGoat is a deliberately insecure web application maintained by [OWASP](http://www.owasp.org/) designed to teach web
-application security lessons.
+WebGoat 是由 [OWASP](http://www.owasp.org/) 维护的故意存在安全漏洞的 Web 应用，旨在帮助用户学习 Web 应用安全。
 
-This program is a demonstration of common server-side application flaws. The
-exercises are intended to be used by people to learn about application security and
-penetration testing techniques.
+本程序演示常见的服务器端应用缺陷。练习面向希望学习应用安全和渗透测试技术的用户。
 
-**WARNING 1:** *While running this program your machine will be extremely
-vulnerable to attack. You should disconnect from the Internet while using
-this program.*  WebGoat's default configuration binds to localhost to minimize
-the exposure.
-
-**WARNING 2:** *This program is for educational purposes only. If you attempt
-these techniques without authorization, you are very likely to get caught. If
-you are caught engaging in unauthorized hacking, most companies will fire you.
-Claiming that you were doing security research will not work as that is the
-first thing that all hackers claim.*
+> **警告一：**运行本程序期间，您的计算机可能极易受到攻击。使用时建议断开互联网连接。WebGoat 默认仅绑定本机地址，以尽量减少暴露面。
+>
+> **警告二：**本程序仅供教育用途。未经授权尝试这些技术很可能导致被发现；未经授权的攻击可能带来严重后果。请只在您拥有或获准测试的环境中练习。
 
 ![WebGoat](docs/images/webgoat.png)
 
-# Installation instructions:
+## 安装与运行
 
-For more details check [the Contribution guide](/CONTRIBUTING.md)
+更多信息请参阅[贡献指南](CONTRIBUTING.md)。
 
-## 1. Run using Docker
+### 1. 使用 Docker 运行
 
-Already have a browser and ZAP and/or Burp installed on your machine in this case you can run the WebGoat image directly using Docker.
+如果本机已安装浏览器以及 ZAP 和/或 Burp，可以直接运行 WebGoat Docker 镜像。
 
-Every release is also published on [DockerHub](https://hub.docker.com/r/webgoat/webgoat).
+每个正式版本也会发布到 [Docker Hub](https://hub.docker.com/r/webgoat/webgoat)。
 
 ```shell
 docker run -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 webgoat/webgoat
 ```
 
-For some lessons you need the container run in the same timezone. For this you can set the TZ environment variable.
-E.g.
+在部分课程中，需要让容器使用与本机相同的时区，可通过 `TZ` 环境变量设置，例如：
 
 ```shell
-docker run -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 -e TZ=America/Boise webgoat/webgoat
+docker run -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 -e TZ=Asia/Shanghai webgoat/webgoat
 ```
 
-If you want to use OWASP ZAP or another proxy, you can no longer use 127.0.0.1 or localhost. but
-you can use custom host entries. For example:
+如需使用 OWASP ZAP 或其他代理，请使用自定义主机名，而不要使用 `127.0.0.1` 或 `localhost`。例如在 hosts 文件中添加：
 
-```shell
+```text
 127.0.0.1 www.webgoat.local www.webwolf.local
 ```
 
-Then you can run the container with:
+然后运行：
 
 ```shell
-docker run -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 -e WEBGOAT_HOST=www.webgoat.local -e WEBWOLF_HOST=www.webwolf.local -e TZ=America/Boise webgoat/webgoat
+docker run -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 -e WEBGOAT_HOST=www.webgoat.local -e WEBWOLF_HOST=www.webwolf.local -e TZ=Asia/Shanghai webgoat/webgoat
 ```
 
-Then visit http://www.webgoat.local:8080/WebGoat/ and http://www.webwolf.local:9090/WebWolf/
+访问 WebGoat：<http://www.webgoat.local:8080/WebGoat/>；访问 WebWolf：<http://www.webwolf.local:9090/WebWolf/>。
 
-## 2. Run using Docker with complete Linux Desktop
+### 2. 使用带 Linux 桌面的 Docker 镜像
 
-Instead of installing tools locally we have a complete Docker image based on running a desktop in your browser. This way you only have to run a Docker image which will give you the best user experience.
+也可以运行提供浏览器桌面的完整 Docker 镜像，无需在本机单独安装工具：
 
 ```shell
 docker run -p 127.0.0.1:3000:3000 webgoat/webgoat-desktop
 ```
 
-## 3. Standalone
+### 3. 独立运行 JAR
 
-Download the latest WebGoat release from [https://github.com/WebGoat/WebGoat/releases](https://github.com/WebGoat/WebGoat/releases)
-
-```shell
-export TZ=Europe/Amsterdam # or your timezone
-java -Dfile.encoding=UTF-8 -jar webgoat-2023.8.jar
-```
-
-Click the link in the log to start WebGoat.
-
-### 3.1 Running on a different port
-
-If for some reason you want to run WebGoat on a different port, you can do so by adding the following parameter:
+从 [GitHub Releases](https://github.com/WebGoat/WebGoat/releases) 下载最新版本：
 
 ```shell
-java -jar webgoat-2023.8.jar --webgoat.port=8001 --webwolf.port=8002
+# Linux/macOS
+export TZ=Asia/Shanghai
+java -Dfile.encoding=UTF-8 -jar webgoat-2026.6-SNAPSHOT.jar
+
+# Windows PowerShell
+$env:TZ = "Asia/Shanghai"
+java -Dfile.encoding=UTF-8 -jar webgoat-2026.6-SNAPSHOT.jar
 ```
 
-In the combined JAR, `--server.port` is an alias for `--webgoat.port`. Use `--webwolf.port` to set
-WebWolf's port separately.
+根据日志中的链接打开 WebGoat。
 
-For the available settings, see the [WebGoat properties](src/main/resources/application-webgoat.properties)
-and [WebWolf properties](src/main/resources/application-webwolf.properties).
+#### 3.1 使用其他端口
 
-## 4. Run from the sources
+如需更改端口，可传入以下参数：
 
-### Prerequisites:
-
-* Java 25
-* Your favorite IDE
-* Git, or Git support in your IDE
-
-Open a command shell/window:
-
-```Shell
-git clone git@github.com:WebGoat/WebGoat.git
+```shell
+java -jar webgoat-2026.6-SNAPSHOT.jar --webgoat.port=8001 --webwolf.port=8002
 ```
 
-Now let's start by compiling the project.
+合并 JAR 中，`--server.port` 是 `--webgoat.port` 的别名。WebWolf 端口需单独使用 `--webwolf.port` 设置。可用配置项请参阅 [WebGoat 配置](src/main/resources/application-webgoat.properties)和 [WebWolf 配置](src/main/resources/application-webwolf.properties)。
 
-```Shell
+### 4. 从源代码运行
+
+前置条件：
+
+- Java 25
+- 您常用的 IDE
+- Git（或 IDE 内置的 Git 支持）
+
+克隆并构建项目：
+
+```shell
+git clone https://github.com/WebGoat/WebGoat.git
 cd WebGoat
-git checkout <<branch_name>>
-# On Linux/Mac:
+git checkout <分支名>
+
+# Linux/macOS
 ./mvnw clean install
 
-# On Windows:
+# Windows
 ./mvnw.cmd clean install
-
-If you have ran WebGoat before, you should first run mvn clean -Pcleanall to clean up files from your temp and home directories which could fail the tests due to changes in lessons!
-
-# Using docker or podman, you can than build the container locally
-docker build -f Dockerfile . -t webgoat/webgoat
 ```
 
-Now we are ready to run the project. WebGoat is using Spring Boot.
+如果以前运行过 WebGoat，课程内容变更可能导致测试受到旧数据影响；必要时先运行 `./mvnw clean -Pcleanall`（Windows 使用 `./mvnw.cmd clean -Pcleanall`）。
 
-```Shell
-# On Linux/Mac:
+本地构建 Docker 镜像：
+
+```shell
+docker build -f Dockerfile -t webgoat/webgoat:zh-local .
+
+docker run --rm -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 -e TZ=Asia/Shanghai webgoat/webgoat:zh-local
+```
+
+启动后访问 <http://127.0.0.1:8080/WebGoat>。登录后在页面右上方的语言菜单中选择“简体中文”。
+
+启动应用：
+
+```shell
+# Linux/macOS
 ./mvnw spring-boot:run
-# On Windows:
+
+# Windows
 ./mvnw.cmd spring-boot:run
-
 ```
 
-... you should be running WebGoat on http://localhost:8080/WebGoat momentarily.
+稍后访问 <http://localhost:8080/WebGoat>。未登录时会跳转到登录页面；登录或创建账户后即可继续。
 
-Note: The above link will redirect you to login page if you are not logged in. LogIn/Create account to proceed.
+如需更改监听地址，请在运行参数中设置 `--server.address=<地址>`，或调整相应的 Spring Boot 配置。
 
-To change the IP address add the following variable to the `WebGoat/webgoat-container/src/main/resources/application.properties` file:
+### 5. 自定义课程菜单
 
-```
-server.address=x.x.x.x
-```
+高级用户可以通过环境变量隐藏部分菜单类别或课程。Linux/macOS 示例：
 
-## 4. Run with custom menu
-
-For specialist only. There is a way to set up WebGoat with a personalized menu. You can leave out some menu categories or individual lessons by setting certain environment variables.
-
-For instance running as a jar on a Linux/macOS it will look like this:
-
-```Shell
-export TZ=Europe/Amsterdam # or your timezone
+```shell
+export TZ=Asia/Shanghai
 export EXCLUDE_CATEGORIES="CLIENT_SIDE,GENERAL,CHALLENGE"
 export EXCLUDE_LESSONS="SqlInjectionAdvanced,SqlInjectionMitigations"
-java -jar target/webgoat-2023.8-SNAPSHOT.jar
+java -jar target/webgoat-2026.6-SNAPSHOT.jar
 ```
 
-Or in a docker run it would (once this version is pushed into docker hub) look like this:
+Docker 示例：
 
-```Shell
+```shell
 docker run -d -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 -e EXCLUDE_CATEGORIES="CLIENT_SIDE,GENERAL,CHALLENGE" -e EXCLUDE_LESSONS="SqlInjectionAdvanced,SqlInjectionMitigations" webgoat/webgoat
 ```
 
+## 中文界面
+
+登录后可在页面右上角的语言菜单中选择“简体中文”。中文菜单、通用界面、提示和登录/注册信息已本地化；尚未提供中文课程译文的课程内容会回退显示英文。欢迎通过贡献指南协助补充课程翻译。

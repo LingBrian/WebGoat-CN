@@ -15,20 +15,18 @@
     <div class="alert alert-info alert-dismissible fade show mt-3">
         <div>
         <p>
-            Challenges in which you need to call your hacker machine WebWolf offers a simple httpd
-            server functionality which only logs the incoming request. You can use the following URL:
-            http://webwolf/landing/* and the incoming request will be available below.
+            <span th:text="#{webwolf.requests.instruction}">For challenges that need to contact your attacker machine, WebWolf provides a simple HTTP server that only logs incoming requests. Use this URL:</span>
+            http://webwolf/landing/*
         </p>
         <p>
-            This is by no means a substitution of httpd but it offers enough functionality to callback to a safe
-            environment and does not require you to host your own httpd server on your local machine.
+            <span th:text="#{webwolf.requests.safety}">This is not a replacement for a full HTTP server, but provides enough functionality for callbacks without hosting your own HTTP server locally.</span>
         </p>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="aria-label=#{webwolf.upload.close}" aria-label="Close"></button>
     </div>
 
 
-    <h3>Requests</h3>
+    <h3 th:text="#{webwolf.requests.title}">Requests</h3>
     <div th:each="trace,iter : ${traces}" class="card-group mt-1" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="card">
             <div class="card-heading" role="tab" th:id="'heading' + ${iter.index}">
